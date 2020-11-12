@@ -1,5 +1,7 @@
 import React from "react";
-import { Layout, Breadcrumb, Table, Tag, Space } from "antd";
+import { Layout, Breadcrumb, Table, Tag, Space, Menu } from "antd";
+import { LaptopOutlined } from "@ant-design/icons";
+import "../css/sensorstatus.css";
 
 const { Content } = Layout;
 const columns = [
@@ -16,9 +18,9 @@ const columns = [
         render: tags => (
             <>
                 {tags.map(tag => {
-                    let color = "green";
+                    let color = "volcano";
                     if (tag === "Active") {
-                        color = "volcano";
+                        color = "green";
                     }
                     return (
                         <Tag color={color} key={tag}>
@@ -58,6 +60,7 @@ const data = [
         tags: ["Inactive"]
     }
 ];
+const { SubMenu } = Menu;
 const SensorStatus = () => {
     return (
         <Layout>
@@ -74,7 +77,42 @@ const SensorStatus = () => {
                     marginBottom: 64
                 }}
             >
-                <Table columns={columns} dataSource={data} />
+                <Menu mode="inline">
+                    <SubMenu
+                        key="zone1"
+                        icon={<LaptopOutlined />}
+                        title="Sensor Zona 1"
+                    >
+                        <Menu.Item className="zone1" key="2">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.146544779924!2d112.5670240956099!3d-7.850537852124256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e787fb5f71ca035%3A0xa9b392b615051b2!2sUB%20Forest!5e0!3m2!1sid!2sid!4v1605177936956!5m2!1sid!2sid"
+                                height="200"
+                                width="100%"
+                                frameBorder="0"
+                                style={{ border: 0 }}
+                                allowFullScreen={true}
+                            ></iframe>
+                            <Table columns={columns} dataSource={data} />
+                        </Menu.Item>
+                    </SubMenu>
+                    <SubMenu
+                        key="zone2"
+                        icon={<LaptopOutlined />}
+                        title="Sensor Zona 2"
+                    >
+                        <Menu.Item className="zone1" key="3">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.146544779924!2d112.5670240956099!3d-7.850537852124256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e787fb5f71ca035%3A0xa9b392b615051b2!2sUB%20Forest!5e0!3m2!1sid!2sid!4v1605177936956!5m2!1sid!2sid"
+                                height="200"
+                                width="100%"
+                                frameBorder="0"
+                                style={{ border: 0 }}
+                                allowFullScreen={true}
+                            ></iframe>
+                            <Table columns={columns} dataSource={data} />
+                        </Menu.Item>
+                    </SubMenu>
+                </Menu>
             </Content>
         </Layout>
     );

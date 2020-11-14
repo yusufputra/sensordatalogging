@@ -29,6 +29,9 @@ import "./css/style.css";
 import Home from "./components/Home";
 import SensorStatus from "./components/SensorStatus";
 import User from "./components/User";
+import SensorDetail from "./components/SensorDetail";
+import InputSensor from "./components/InputSensor";
+import TambahUser from "./components/TambahUser";
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -63,10 +66,22 @@ const App = () => {
                             <Menu.Item key="2">
                                 <Link to={"/sensorstatus"}>Status Sensor</Link>
                             </Menu.Item>
+                            <Menu.Item key="3">
+                                <Link to={"/tambahsensor"}>Tambah Sensor</Link>
+                            </Menu.Item>
                         </SubMenu>
-                        <Menu.Item key="3" icon={<UserOutlined />}>
-                            <Link to={"/user"}>user</Link>
-                        </Menu.Item>
+                        <SubMenu
+                            key="sub3"
+                            icon={<UserOutlined />}
+                            title="User"
+                        >
+                            <Menu.Item key="5">
+                                <Link to={"/user"}>User</Link>
+                            </Menu.Item>
+                            <Menu.Item key="6">
+                                <Link to={"/tambahuser"}>Tambah User</Link>
+                            </Menu.Item>
+                        </SubMenu>
                     </Menu>
                 </Sider>
                 <Layout
@@ -81,10 +96,13 @@ const App = () => {
                             path={"/sensorstatus"}
                             component={SensorStatus}
                         />
+                        <Route path={"/user"} component={User} />
                         <Route
-                            path={"/user"}
-                            component={User}
+                            path={"/detailsensor"}
+                            component={SensorDetail}
                         />
+                        <Route path={"/tambahsensor"} component={InputSensor} />
+                        <Route path={"/tambahuser"} component={TambahUser} />
                     </Switch>
                 </Layout>
             </Layout>

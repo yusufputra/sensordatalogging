@@ -32,7 +32,7 @@ const Home = () => {
                             size="small"
                             title="Sensor Titik 1"
                             style={{ width: 300 }}
-                            extra={<a href="#">More</a>}
+                            extra={<a href="#">Zona 1</a>}
                         >
                             <p>Suhu Udara : 24°C </p>
                             <p>Kelembaban Udara : 90%</p>
@@ -49,7 +49,7 @@ const Home = () => {
                             size="small"
                             title="Sensor Titik 2"
                             style={{ width: 300 }}
-                            extra={<a href="#">More</a>}
+                            extra={<a href="#">Zona 1</a>}
                         >
                             <p>Suhu Udara : 24°C </p>
                             <p>Kelembaban Udara : 90%</p>
@@ -66,7 +66,7 @@ const Home = () => {
                             size="small"
                             title="Sensor Titik 3"
                             style={{ width: 300 }}
-                            extra={<a href="#">More</a>}
+                            extra={<a href="#">Zona 1</a>}
                         >
                             <p>Suhu Udara : 24°C </p>
                             <p>Kelembaban Udara : 90%</p>
@@ -91,7 +91,7 @@ const Home = () => {
                             size="small"
                             title="Sensor Titik 4"
                             style={{ width: 300 }}
-                            extra={<a href="#">More</a>}
+                            extra={<a href="#">Zona 1</a>}
                         >
                             <p>Suhu Udara : 24°C </p>
                             <p>Kelembaban Udara : 90%</p>
@@ -108,7 +108,7 @@ const Home = () => {
                             size="small"
                             title="Sensor Titik 5"
                             style={{ width: 300 }}
-                            extra={<a href="#">More</a>}
+                            extra={<a href="#">Zona 2</a>}
                         >
                             <p>Suhu Udara : 24°C </p>
                             <p>Kelembaban Udara : 90%</p>
@@ -125,7 +125,7 @@ const Home = () => {
                             size="small"
                             title="Sensor Titik 6"
                             style={{ width: 300 }}
-                            extra={<a href="#">More</a>}
+                            extra={<a href="#">Zona 2</a>}
                         >
                             <p>Suhu Udara : 24°C </p>
                             <p>Kelembaban Udara : 90%</p>
@@ -150,7 +150,7 @@ const Home = () => {
                             size="small"
                             title="Sensor Titik 7"
                             style={{ width: 300 }}
-                            extra={<a href="#">More</a>}
+                            extra={<a href="#">Zona 2</a>}
                         >
                             <p>Suhu Udara : 24°C </p>
                             <p>Kelembaban Udara : 90%</p>

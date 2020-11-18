@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ZoneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +16,21 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 Route::post('register', [UserController::class,'register']);
 Route::post('login', [UserController::class,'login']);
 Route::get('user', [UserController::class,'getAuthenticatedUser'])->middleware('jwt.verify');
 Route::get('cek', [UserController::class,'cek']);
+
+Route::group(['middleware' => 'jwt.verify'], function () {
+    Route::prefix('zone')->group(function () {
+        Route::post('create', [ZoneController::class,'create']);
+        Route::get('all',[ZoneController::class,'getAll']);
+        Route::get('id/{id}',[ZoneController::class,'getById']);
+    });
+    Route::prefix('sensor')->group(function () {
+        
+    });
+});

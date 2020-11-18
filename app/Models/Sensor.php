@@ -9,6 +9,6 @@ class Sensor extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'zone_id','author',
+        'sensor_name','zone_id','author',
     ];
 }

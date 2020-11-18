@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SensorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -31,6 +32,12 @@ Route::group(['middleware' => 'jwt.verify'], function () {
         Route::get('id/{id}',[ZoneController::class,'getById']);
     });
     Route::prefix('sensor')->group(function () {
-        
+        Route::post('create',[SensorController::class,'create']);
+        Route::get('all',[SensorController::class,'getAll']);
+        Route::get('id/{id}',[SensorController::class,'getById']);
+    });
+
+    Route::prefix('datalog')->group(function () {
+
     });
 });

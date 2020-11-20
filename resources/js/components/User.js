@@ -78,7 +78,8 @@ const User = () => {
     return (
         <Layout>
             <Breadcrumb style={{ margin: "16px 0" }}>
-                <Breadcrumb.Item>User</Breadcrumb.Item>
+                <Breadcrumb.Item>Pengelola</Breadcrumb.Item>
+                <Breadcrumb.Item>Daftar Pengelola</Breadcrumb.Item>
             </Breadcrumb>
             <Content
                 className="site-layout-background"

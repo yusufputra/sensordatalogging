@@ -21,7 +21,8 @@ import { Layout, Menu } from "antd";
 import {
     PieChartOutlined,
     LaptopOutlined,
-    UserOutlined
+    UserOutlined,
+    ShareAltOutlined
 } from "@ant-design/icons";
 import logo from "./asset/img/logo.gif";
 import "antd/dist/antd.css";
@@ -71,15 +72,27 @@ const App = () => {
                             </Menu.Item>
                         </SubMenu>
                         <SubMenu
+                            key="sub4"
+                            icon={<ShareAltOutlined />}
+                            title="Zona"
+                        >
+                            <Menu.Item key="7">
+                                <Link to={"/daftarzona"}>Daftar Zona</Link>
+                            </Menu.Item>
+                            <Menu.Item key="8">
+                                <Link to={"/tambahzona"}>Tambah Zona</Link>
+                            </Menu.Item>
+                        </SubMenu>
+                        <SubMenu
                             key="sub3"
                             icon={<UserOutlined />}
-                            title="User"
+                            title="Pengelola"
                         >
                             <Menu.Item key="5">
-                                <Link to={"/user"}>User</Link>
+                                <Link to={"/user"}>Daftar Pengelola</Link>
                             </Menu.Item>
                             <Menu.Item key="6">
-                                <Link to={"/tambahuser"}>Tambah User</Link>
+                                <Link to={"/tambahuser"}>Tambah Pengelola</Link>
                             </Menu.Item>
                         </SubMenu>
                     </Menu>

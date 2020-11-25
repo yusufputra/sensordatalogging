@@ -29,7 +29,8 @@ class SensorController extends Controller
     }
     public function getAll()
     {
-        return response()->json(Sensor::All());
+        // return response()->json(Sensor::All());
+        return response()->json(Sensor::with('data')->get());
     }
     public function getById($id)
     {

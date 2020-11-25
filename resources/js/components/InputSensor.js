@@ -51,18 +51,6 @@ const InputSensor = () => {
                             <Option value="3">3</Option>
                         </Select>
                     </Form.Item>
-                    <Form.Item
-                        label="Lokasi Sensor"
-                        name="lokasi"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Please input Lokasi"
-                            }
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
                     <Form.Item {...tailLayout}>
                         <Button type="primary" htmlType="submit">
                             Submit

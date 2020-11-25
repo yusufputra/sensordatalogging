@@ -12,6 +12,7 @@ class ZoneController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "zone_name" => 'required|string|max:255',
+            "location" => 'required|string|max:255',
             "author" => 'required|digits_between:1,20|exists:users,id'
         ]);
 
@@ -21,6 +22,7 @@ class ZoneController extends Controller
 
         $zone = Zone::create([
             'zone_name' => $request->get('zone_name'),
+            'location' => $request->get('location'),
             'author' => $request->get('author')
         ]);
         return response()->json($zone, 201);

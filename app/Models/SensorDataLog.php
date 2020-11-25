@@ -11,4 +11,8 @@ class SensorDataLog extends Model
     protected $fillable = [
         'sensor_id', 'suhu_udara', 'kelembaban_udara', 'suhu_tanah', 'kelembaban_tanah', 'intensitas_cahaya'
     ];
+
+    public function sensor(){
+        return $this->belongsTo('sensors');
+    }
 }

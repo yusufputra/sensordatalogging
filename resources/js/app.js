@@ -14,10 +14,11 @@ require("./bootstrap");
 
 require("./components/Example");
 
-import React from "react";
+import React, { useContext } from "react";
 import ReactDOM from "react-dom";
+import AuthContextProvider, { UserContext } from "./authContextProvider";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Button } from "antd";
 import {
     PieChartOutlined,
     LaptopOutlined,
@@ -33,101 +34,151 @@ import User from "./components/User";
 import SensorDetail from "./components/SensorDetail";
 import InputSensor from "./components/InputSensor";
 import TambahUser from "./components/TambahUser";
+import DaftarZona from "./components/DaftarZona";
+import TambahZona from "./components/TambahZona";
+import Login from "./components/Login";
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
 const App = () => {
-    return (
-        <Layout>
-            <Header className="header" style={{ display: "inline-flex" }}>
-                <div className="logo">
-                    <img
-                        src={logo}
-                        style={{ height: "-webkit-fill-available" }}
-                    />
-                </div>
-            </Header>
-            <Layout style={{ marginTop: 64 }}>
-                <Sider width={200} className="site-layout-background">
-                    <Menu
-                        mode="inline"
-                        defaultSelectedKeys={["1"]}
-                        defaultOpenKeys={["sub1"]}
-                        style={{ height: "100%", borderRight: 0 }}
-                    >
-                        <Menu.Item key="1" icon={<PieChartOutlined />}>
-                            <Link to={"/"}>Dashboard</Link>
-                        </Menu.Item>
+    const { user, verified } = useContext(UserContext);
+    console.log(user);
+    console.log(verified);
+    if (localStorage.token == null || verified == false) {
+        return (
+            <div>
+                <Login></Login>
+            </div>
+        );
+    } else {
+        const logout = () => {
+            localStorage.clear();
+            window.location.reload();
+        };
+        return (
+            <Layout>
+                <Header className="header" style={{ display: "inline-flex" }}>
+                    <div className="logo">
+                        <img
+                            src={logo}
+                            style={{ height: "-webkit-fill-available" }}
+                        />
+                    </div>
+                </Header>
+                <Layout style={{ marginTop: 64 }}>
+                    <Sider width={200} className="site-layout-background">
+                        <Menu
+                            mode="inline"
+                            defaultSelectedKeys={["1"]}
+                            defaultOpenKeys={["sub1"]}
+                            style={{ height: "100%", borderRight: 0 }}
+                        >
+                            <Menu.Item key="1" icon={<PieChartOutlined />}>
+                                <Link to={"/"}>Dashboard</Link>
+                            </Menu.Item>
 
-                        <SubMenu
-                            key="sub2"
-                            icon={<LaptopOutlined />}
-                            title="Sensor"
-                        >
-                            <Menu.Item key="2">
-                                <Link to={"/sensorstatus"}>Status Sensor</Link>
-                            </Menu.Item>
-                            <Menu.Item key="3">
-                                <Link to={"/tambahsensor"}>Tambah Sensor</Link>
-                            </Menu.Item>
-                        </SubMenu>
-                        <SubMenu
-                            key="sub4"
-                            icon={<ShareAltOutlined />}
-                            title="Zona"
-                        >
-                            <Menu.Item key="7">
-                                <Link to={"/daftarzona"}>Daftar Zona</Link>
-                            </Menu.Item>
-                            <Menu.Item key="8">
-                                <Link to={"/tambahzona"}>Tambah Zona</Link>
-                            </Menu.Item>
-                        </SubMenu>
-                        <SubMenu
-                            key="sub3"
-                            icon={<UserOutlined />}
-                            title="Pengelola"
-                        >
-                            <Menu.Item key="5">
-                                <Link to={"/user"}>Daftar Pengelola</Link>
-                            </Menu.Item>
-                            <Menu.Item key="6">
-                                <Link to={"/tambahuser"}>Tambah Pengelola</Link>
-                            </Menu.Item>
-                        </SubMenu>
-                    </Menu>
-                </Sider>
-                <Layout
-                    style={{
-                        padding: "0 24px 24px",
-                        height: "100vh"
-                    }}
-                >
-                    <Switch>
-                        <Route exact path={"/"} component={Home} />
-                        <Route
-                            path={"/sensorstatus"}
-                            component={SensorStatus}
-                        />
-                        <Route path={"/user"} component={User} />
-                        <Route
-                            path={"/detailsensor"}
-                            component={SensorDetail}
-                        />
-                        <Route path={"/tambahsensor"} component={InputSensor} />
-                        <Route path={"/tambahuser"} component={TambahUser} />
-                    </Switch>
+                            <SubMenu
+                                key="sub2"
+                                icon={<LaptopOutlined />}
+                                title="Sensor"
+                            >
+                                <Menu.Item key="2">
+                                    <Link to={"/sensorstatus"}>
+                                        Status Sensor
+                                    </Link>
+                                </Menu.Item>
+                                <Menu.Item key="3">
+                                    <Link to={"/tambahsensor"}>
+                                        Tambah Sensor
+                                    </Link>
+                                </Menu.Item>
+                            </SubMenu>
+                            <SubMenu
+                                key="sub4"
+                                icon={<ShareAltOutlined />}
+                                title="Zona"
+                            >
+                                <Menu.Item key="7">
+                                    <Link to={"/daftarzona"}>Daftar Zona</Link>
+                                </Menu.Item>
+                                <Menu.Item key="8">
+                                    <Link to={"/tambahzona"}>Tambah Zona</Link>
+                                </Menu.Item>
+                            </SubMenu>
+                            <SubMenu
+                                key="sub3"
+                                icon={<UserOutlined />}
+                                title="Pengelola"
+                            >
+                                <Menu.Item key="5">
+                                    <Link to={"/user"}>Daftar Pengelola</Link>
+                                </Menu.Item>
+                                <Menu.Item key="6">
+                                    <Link to={"/tambahuser"}>
+                                        Tambah Pengelola
+                                    </Link>
+                                </Menu.Item>
+                                <Menu.Item key="20">
+                                    <Button
+                                        style={{ backgroundColor: "#f05d32" }}
+                                        onClick={logout}
+                                        type="primary"
+                                        danger
+                                    >
+                                        Logout
+                                    </Button>
+                                </Menu.Item>
+                            </SubMenu>
+                        </Menu>
+                    </Sider>
+                    <Layout
+                        style={{
+                            padding: "0 24px 24px",
+                            height: "100vh"
+                        }}
+                    >
+                        <Switch>
+                            <Route exact path={"/"} component={Home} />
+                            <Route
+                                path={"/sensorstatus"}
+                                component={SensorStatus}
+                            />
+                            <Route path={"/user"} component={User} />
+                            <Route
+                                path={"/detailsensor"}
+                                component={SensorDetail}
+                            />
+                            <Route
+                                path={"/tambahsensor"}
+                                component={InputSensor}
+                            />
+                            <Route
+                                path={"/tambahuser"}
+                                component={TambahUser}
+                            />
+                            <Route
+                                path={"/daftarzona"}
+                                component={DaftarZona}
+                            />
+                            <Route
+                                path={"/tambahzona"}
+                                component={TambahZona}
+                            />
+                        </Switch>
+                    </Layout>
                 </Layout>
             </Layout>
-        </Layout>
-    );
+        );
+    }
 };
 
 export default App;
 
 ReactDOM.render(
     <BrowserRouter>
-        <App />
+        <AuthContextProvider>
+            <App />
+        </AuthContextProvider>
     </BrowserRouter>,
     document.getElementById("app")
 );

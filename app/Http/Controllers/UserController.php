@@ -31,9 +31,10 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'role' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
@@ -41,7 +42,7 @@ class UserController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->get('name'),
+            'name' => $request->get('nama'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
             'role' => $request->get('role'),
@@ -71,9 +72,5 @@ class UserController extends Controller
         }
 
         return response()->json(compact('user'));
-    }
-    public function cek()
-    {
-        return response()->json(['ress' => "cek"]);
     }
 }

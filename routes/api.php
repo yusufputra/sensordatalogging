@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\SensorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,6 @@ use App\Http\Controllers\ZoneController;
 Route::post('register', [UserController::class,'register']);
 Route::post('login', [UserController::class,'login']);
 Route::get('user', [UserController::class,'getAuthenticatedUser'])->middleware('jwt.verify');
-Route::get('cek', [UserController::class,'cek']);
 
 Route::group(['middleware' => 'jwt.verify'], function () {
     Route::prefix('zone')->group(function () {
@@ -38,6 +38,8 @@ Route::group(['middleware' => 'jwt.verify'], function () {
     });
 
     Route::prefix('datalog')->group(function () {
-
+        Route::post('create',[DataController::class,'create']);
+        Route::get('all',[DataController::class,'getAll']);
+        Route::get('id/{id}',[DataController::class,'getById']);
     });
 });

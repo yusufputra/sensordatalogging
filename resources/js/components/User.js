@@ -1,82 +1,112 @@
-import React from "react";
-import { Layout, Breadcrumb, Table, Tag, Space } from "antd";
+import React, { useEffect, useState, useContext } from "react";
+import { Breadcrumb, Table, Layout, Space, Button, notification } from "antd";
+import { UserAddOutlined } from "@ant-design/icons";
+import Axios from "axios";
+import api from "../api/api";
+import { Link } from "react-router-dom";
+import { UserContext } from "../authContextProvider";
 
 const { Content } = Layout;
-const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: text => <a>{text}</a>,
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: tags => (
-        <>
-          {tags.map(tag => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
-        </Space>
-      ),
-    },
-  ];
-  
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
-const User = () => {
+const toggleNotif = (type, message) => {
+    notification[type]({
+        message: message,
+        description: "will be disappear in 4 seconds",
+    });
+};
+const setting = () => {
+    const { user } = useContext(UserContext);
+    const [data, setdata] = useState([]);
+    useEffect(() => {
+        console.log(api.alluser);
+        Axios.get(api.alluser, {
+            headers: {
+                Authorization: "Bearer " + localStorage.token,
+            },
+        })
+            .then((ress) => {
+                console.log(ress);
+                setdata(ress.data);
+            })
+            .catch((error) => {
+                console.log(error);
+                alert(error);
+            });
+    }, []);
+
+    const deleteUser = (record) => {
+        let body = {
+            id: record,
+        };
+        Axios.post(api.deleteUser, body, {
+            headers: {
+                Authorization: "Bearer " + localStorage.token,
+            },
+        })
+            .then((ress) => {
+                toggleNotif("success", "Berhasil menghapus pengelola");
+                setdata(
+                    data.filter((item) => {
+                        return item.id != record;
+                    })
+                );
+            })
+            .catch((error) => {
+                console.log(error.response);
+                toggleNotif("error", error.response.statusText);
+            });
+    };
+
+    const columns = [
+        {
+            title: "ID",
+            dataIndex: "id",
+            key: "id",
+        },
+        {
+            title: "Name",
+            dataIndex: "name",
+            key: "name",
+            render: (text) => <a>{text}</a>,
+        },
+        {
+            title: "Email",
+            dataIndex: "email",
+            key: "email",
+        },
+        {
+            title: "Created",
+            dataIndex: "created_at",
+            key: "created_at",
+        },
+        {
+            title: "Last Update",
+            dataIndex: "updated_at",
+            key: "updated_at",
+        },
+        {
+            title: "Action",
+            key: "action",
+            render: (record) => {
+                return (
+                    user.role == 1 && (
+                        <Space size="middle">
+                            <Link to={`/editUser/${record.id}`}>Edit</Link>
+                            <Link
+                                onClick={() => {
+                                    deleteUser(record.id);
+                                }}
+                            >
+                                Delete
+                            </Link>
+                        </Space>
+                    )
+                );
+            },
+        },
+    ];
+
     return (
-        <Layout>
+        <div>
             <Breadcrumb style={{ margin: "16px 0" }}>
                 <Breadcrumb.Item>Pengelola</Breadcrumb.Item>
                 <Breadcrumb.Item>Daftar Pengelola</Breadcrumb.Item>
@@ -86,14 +116,20 @@ const User = () => {
                 style={{
                     padding: 24,
                     margin: 0,
-                    minHeight: "min-content",
-                    marginBottom: 64
+                    minHeight: 280,
                 }}
             >
+                {user.role == 1 && (
+                    <Link to={"/tambahuser"}>
+                        <Button type="primary" icon={<UserAddOutlined />}>
+                            Tambah Pengelola
+                        </Button>
+                    </Link>
+                )}
                 <Table columns={columns} dataSource={data} />
             </Content>
-        </Layout>
+        </div>
     );
 };
 
-export default User;
+export default setting;

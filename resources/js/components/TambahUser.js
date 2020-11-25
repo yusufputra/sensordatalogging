@@ -10,6 +10,7 @@ import {
     notification
 } from "antd";
 import Axios from "axios";
+import api from "../api/api";
 
 const tailLayout = {
     wrapperCol: { offset: 4, span: 10 }
@@ -31,26 +32,26 @@ const TambahUser = () => {
     };
     const onFinish = values => {
         console.log(values);
-        // const body = {
-        //     email: values.email,
-        //     name: values.name,
-        //     password: values.password,
-        //     password_confirmation: values.password_confirmation,
-        //     role: values.role || 0
-        // };
-        // Axios.post(api.register, body, {
-        //     headers: {
-        //         Authorization: "Bearer " + localStorage.token
-        //     }
-        // })
-        //     .then(ress => {
-        //         toggleNotif("success", "Berhasil menambahkan user");
-        //         history.push("/setting");
-        //     })
-        //     .catch(error => {
-        //         console.log(error.response);
-        //         toggleNotif("error", error.response.statusText);
-        //     });
+        const body = {
+            email: values.email,
+            name: values.nama,
+            password: values.password,
+            password_confirmation: values.password_confirmation,
+            role: values.role || 0
+        };
+        Axios.post(api.register, body, {
+            headers: {
+                Authorization: "Bearer " + localStorage.token
+            }
+        })
+            .then(ress => {
+                toggleNotif("success", "Berhasil menambahkan pengelola");
+                history.push("/user");
+            })
+            .catch(error => {
+                console.log(error.response);
+                toggleNotif("error", error.response.statusText);
+            });
     };
     return (
         <Layout>

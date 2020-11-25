@@ -21,25 +21,29 @@ use App\Http\Controllers\ZoneController;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::post('register', [UserController::class,'register']);
-Route::post('login', [UserController::class,'login']);
-Route::get('user', [UserController::class,'getAuthenticatedUser'])->middleware('jwt.verify');
+Route::post('register', [UserController::class, 'register']);
+Route::post('login', [UserController::class, 'login']);
+Route::get('user', [UserController::class, 'getAuthenticatedUser'])->middleware('jwt.verify');
+Route::get('alluser', [UserController::class, 'getAllUser'])->middleware('jwt.verify');
+Route::post('deleteuser', [UserController::class, 'deleteUser'])->middleware('jwt.verify');
+Route::get('user/{id}', [UserController::class, 'getSpecifiedById'])->middleware('jwt.verify');
+Route::post('edituser', [UserController::class, 'editUser'])->middleware('jwt.verify');
 
 Route::group(['middleware' => 'jwt.verify'], function () {
     Route::prefix('zone')->group(function () {
-        Route::post('create', [ZoneController::class,'create']);
-        Route::get('all',[ZoneController::class,'getAll']);
-        Route::get('id/{id}',[ZoneController::class,'getById']);
+        Route::post('create', [ZoneController::class, 'create']);
+        Route::get('all', [ZoneController::class, 'getAll']);
+        Route::get('id/{id}', [ZoneController::class, 'getById']);
     });
     Route::prefix('sensor')->group(function () {
-        Route::post('create',[SensorController::class,'create']);
-        Route::get('all',[SensorController::class,'getAll']);
-        Route::get('id/{id}',[SensorController::class,'getById']);
+        Route::post('create', [SensorController::class, 'create']);
+        Route::get('all', [SensorController::class, 'getAll']);
+        Route::get('id/{id}', [SensorController::class, 'getById']);
     });
 
     Route::prefix('datalog')->group(function () {
-        Route::post('create',[DataController::class,'create']);
-        Route::get('all',[DataController::class,'getAll']);
-        Route::get('id/{id}',[DataController::class,'getById']);
+        Route::post('create', [DataController::class, 'create']);
+        Route::get('all', [DataController::class, 'getAll']);
+        Route::get('id/{id}', [DataController::class, 'getById']);
     });
 });

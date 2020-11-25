@@ -37,6 +37,7 @@ import TambahUser from "./components/TambahUser";
 import DaftarZona from "./components/DaftarZona";
 import TambahZona from "./components/TambahZona";
 import Login from "./components/Login";
+import EditUser from "./components/EditUser";
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -163,6 +164,10 @@ const App = () => {
                             <Route
                                 path={"/tambahzona"}
                                 component={TambahZona}
+                            />
+                            <Route
+                                path={"/editUser/:id"}
+                                component={EditUser}
                             />
                         </Switch>
                     </Layout>

@@ -9,6 +9,10 @@ class Zone extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'zone_name','location','author',
+        'zone_name', 'location', 'author',
     ];
+    public function author()
+    {
+        return $this->belongsTo('App\User', 'author', 'id');
+    }
 }

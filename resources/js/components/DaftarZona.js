@@ -1,66 +1,70 @@
-import React from "react";
-import { Layout, Breadcrumb, Table, Tag, Space} from "antd";
+import React, { useEffect, useState, useContext } from "react";
+import { Layout, Breadcrumb, Table, Tag, Space } from "antd";
+import { UserContext } from "../authContextProvider";
+import Axios from "axios";
+import api from "../api/api";
+import { Link } from "react-router-dom";
 import "../css/sensorstatus.css";
 
 const { Content } = Layout;
 const columns = [
     {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
-        render: text => <a>{text}</a>
+        title: "Zone Name",
+        dataIndex: "zone_name",
+        key: "zone_name"
     },
     {
-        title: "Tags",
-        key: "tags",
-        dataIndex: "tags",
-        render: tags => (
-            <>
-                {tags.map(tag => {
-                    let color = "volcano";
-                    if (tag === "Active") {
-                        color = "green";
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        )
+        title: "Author",
+        dataIndex: "author",
+        key: "author",
+        render: record => record.name
     },
     {
         title: "Action",
         key: "action",
         render: (text, record) => (
             <Space size="middle">
-                <a href={"/detailsensor"}>Detail</a>
-                <a>Edit</a>
-                <a>Delete</a>
+                <Link to={"/detailsensor/" + record.id}>Detail</Link>
+                <Link to={"/editsensor/" + record.id}>Edit</Link>
+                <Link
+                    onClick={() => {
+                        deleteSensor(record.id);
+                    }}
+                >
+                    Delete
+                </Link>
             </Space>
         )
     }
 ];
+const deleteSensor = id => {
+    console.log(id);
+};
 
-const data = [
-    {
-        key: "1",
-        name: "Sensor 1",
-        tags: ["Active"]
-    },
-    {
-        key: "2",
-        name: "Sensor 2",
-        tags: ["Active"]
-    },
-    {
-        key: "3",
-        name: "Sensor 3",
-        tags: ["Inactive"]
-    }
-];
 const DaftarZona = () => {
+    const { user } = useContext(UserContext);
+    const [data, setdata] = useState([]);
+    const toggleNotif = (type, message) => {
+        notification[type]({
+            message: message,
+            description: "will be disappear in 4 seconds"
+        });
+    };
+    useEffect(() => {
+        Axios.get(api.allzona, {
+            headers: {
+                Authorization: "Bearer " + localStorage.token
+            }
+        })
+            .then(ress => {
+                console.log(ress);
+                setdata(ress.data);
+            })
+            .catch(error => {
+                console.log(error);
+                alert(error);
+            });
+    }, []);
     return (
         <Layout>
             <Breadcrumb style={{ margin: "16px 0" }}>

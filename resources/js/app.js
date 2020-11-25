@@ -146,7 +146,7 @@ const App = () => {
                             />
                             <Route path={"/user"} component={User} />
                             <Route
-                                path={"/detailsensor"}
+                                path={"/detailsensor/:id"}
                                 component={SensorDetail}
                             />
                             <Route

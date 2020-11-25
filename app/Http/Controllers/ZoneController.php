@@ -29,7 +29,7 @@ class ZoneController extends Controller
     }
     public function getAll()
     {
-        return response()->json(Zone::All());
+        return response()->json(Zone::with('author')->get());
     }
     public function getById($id)
     {

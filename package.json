@@ -28,6 +28,7 @@
         "@ant-design/charts": "^1.0.6",
         "ant-design-pro": "^2.3.2",
         "antd": "^4.7.2",
+        "moment": "^2.29.1",
         "react-router-dom": "^5.2.0"
     }
 }

@@ -34,11 +34,15 @@ Route::group(['middleware' => 'jwt.verify'], function () {
         Route::post('create', [ZoneController::class, 'create']);
         Route::get('all', [ZoneController::class, 'getAll']);
         Route::get('id/{id}', [ZoneController::class, 'getById']);
+        Route::post('edit', [ZoneController::class, 'edit']);
+        Route::post('delete', [ZoneController::class, 'delete']);
     });
     Route::prefix('sensor')->group(function () {
         Route::post('create', [SensorController::class, 'create']);
         Route::get('all', [SensorController::class, 'getAll']);
         Route::get('id/{id}', [SensorController::class, 'getById']);
+        Route::post('edit', [SensorController::class, 'edit']);
+        Route::post('delete', [SensorController::class, 'delete']);
     });
 
     Route::prefix('datalog')->group(function () {

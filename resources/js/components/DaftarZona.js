@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Layout, Breadcrumb, Table, Tag, Space } from "antd";
+import { Layout, Breadcrumb, Table, notification, Space } from "antd";
 import { UserContext } from "../authContextProvider";
 import Axios from "axios";
 import api from "../api/api";
@@ -7,48 +7,66 @@ import { Link } from "react-router-dom";
 import "../css/sensorstatus.css";
 
 const { Content } = Layout;
-const columns = [
-    {
-        title: "Zone Name",
-        dataIndex: "zone_name",
-        key: "zone_name"
-    },
-    {
-        title: "Author",
-        dataIndex: "author",
-        key: "author",
-        render: record => record.name
-    },
-    {
-        title: "Action",
-        key: "action",
-        render: (text, record) => (
-            <Space size="middle">
-                <Link to={"/detailsensor/" + record.id}>Detail</Link>
-                <Link to={"/editsensor/" + record.id}>Edit</Link>
-                <Link
-                    onClick={() => {
-                        deleteSensor(record.id);
-                    }}
-                >
-                    Delete
-                </Link>
-            </Space>
-        )
-    }
-];
-const deleteSensor = id => {
-    console.log(id);
-};
 
 const DaftarZona = () => {
     const { user } = useContext(UserContext);
     const [data, setdata] = useState([]);
+    const columns = [
+        {
+            title: "Zone Name",
+            dataIndex: "zone_name",
+            key: "zone_name"
+        },
+        {
+            title: "Author",
+            dataIndex: "author",
+            key: "author",
+            render: record => record.name
+        },
+        {
+            title: "Action",
+            key: "action",
+            render: (text, record) => (
+                <Space size="middle">
+                    <Link to={"/editZona/" + record.id}>Edit</Link>
+                    <Link
+                        onClick={() => {
+                            deleteZona(record.id);
+                        }}
+                    >
+                        Delete
+                    </Link>
+                </Space>
+            )
+        }
+    ];
     const toggleNotif = (type, message) => {
         notification[type]({
             message: message,
             description: "will be disappear in 4 seconds"
         });
+    };
+    const deleteZona = id => {
+        let body = {
+            id: id
+        };
+        Axios.post(api.deletezona, body, {
+            headers: {
+                Authorization: "Bearer " + localStorage.token
+            }
+        })
+            .then(ress => {
+                toggleNotif("success", "Berhasil menghapus zona");
+                setdata(
+                    data.filter(item => {
+                        return item.id != id;
+                    })
+                );
+            })
+            .catch(error => {
+                console.log(error);
+                toggleNotif("error", "Terjadi Kesalahan Teknis");
+            });
     };
     useEffect(() => {
         Axios.get(api.allzona, {

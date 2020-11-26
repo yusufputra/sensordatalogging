@@ -16,8 +16,16 @@ class Sensor extends Model
     {
         return $this->hasMany('App\Models\SensorDataLog', 'sensor_id', 'id')->orderBy('id', 'desc')->take(1);
     }
+    public function alldata()
+    {
+        return $this->hasMany('App\Models\SensorDataLog', 'sensor_id', 'id')->orderBy('id', 'desc');
+    }
     public function zone()
     {
         return $this->belongsTo('App\Models\Zone', 'zone_id', 'id');
+    }
+    public function author()
+    {
+        return $this->belongsTo('App\User', 'author', 'id');
     }
 }

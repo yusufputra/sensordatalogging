@@ -5,6 +5,7 @@ import Axios from "axios";
 import api from "../api/api";
 import { Link } from "react-router-dom";
 import { UserContext } from "../authContextProvider";
+import moment from "moment";
 
 const { Content } = Layout;
 const toggleNotif = (type, message) => {
@@ -77,18 +78,24 @@ const setting = () => {
             title: "Created",
             dataIndex: "created_at",
             key: "created_at",
+            render: (text) => (
+                <a>{moment(text).format("MM-DD-YYYY, h:mm:ss")}</a>
+            ),
         },
         {
             title: "Last Update",
             dataIndex: "updated_at",
             key: "updated_at",
+            render: (text) => (
+                <a>{moment(text).format("MM-DD-YYYY, h:mm:ss")}</a>
+            ),
         },
         {
             title: "Action",
             key: "action",
             render: (record) => {
                 return (
-                    user.role == 1 && (
+                    user.role == 2 && (
                         <Space size="middle">
                             <Link to={`/editUser/${record.id}`}>Edit</Link>
                             <Link

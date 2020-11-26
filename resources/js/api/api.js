@@ -10,8 +10,14 @@ const API_CONSTANT_MAP = {
     editUser: `${BASE_API}/edituser`,
     allzona: `${BASE_API}/zone/all`,
     createZona: `${BASE_API}/zone/create`,
+    getzonabyid: `${BASE_API}/zone/id/`,
+    editzona: `${BASE_API}/zone/edit`,
+    deletezona: `${BASE_API}/zone/delete`,
     createSensor: `${BASE_API}/sensor/create`,
-    allsensor: `${BASE_API}/sensor/all`
+    allsensor: `${BASE_API}/sensor/all`,
+    getsensorbyid: `${BASE_API}/sensor/id/`,
+    editsensor: `${BASE_API}/sensor/edit`,
+    deletesensor: `${BASE_API}/sensor/delete`
 };
 
 module.exports = API_CONSTANT_MAP;

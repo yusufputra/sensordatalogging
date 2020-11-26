@@ -38,6 +38,8 @@ import DaftarZona from "./components/DaftarZona";
 import TambahZona from "./components/TambahZona";
 import Login from "./components/Login";
 import EditUser from "./components/EditUser";
+import EditSensor from "./components/EditSensor";
+import EditZona from "./components/EditZona";
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -168,6 +170,14 @@ const App = () => {
                             <Route
                                 path={"/editUser/:id"}
                                 component={EditUser}
+                            />
+                            <Route
+                                path={"/editSensor/:id"}
+                                component={EditSensor}
+                            />
+                            <Route
+                                path={"/editZona/:id"}
+                                component={EditZona}
                             />
                         </Switch>
                     </Layout>

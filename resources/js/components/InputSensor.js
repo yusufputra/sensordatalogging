@@ -1,5 +1,17 @@
-import React from "react";
-import { Breadcrumb, Form, Layout, Input, Button, Select } from "antd";
+import React, { useEffect, useState, useContext } from "react";
+import {
+    Breadcrumb,
+    Form,
+    Layout,
+    Input,
+    Button,
+    Select,
+    notification
+} from "antd";
+import { useHistory } from "react-router-dom";
+import Axios from "axios";
+import api from "../api/api";
+import { UserContext } from "../authContextProvider";
 
 const tailLayout = {
     wrapperCol: { offset: 4, span: 10 }
@@ -11,6 +23,50 @@ const layout = {
 const { Content } = Layout;
 const InputSensor = () => {
     const [form] = Form.useForm();
+    const { user } = useContext(UserContext);
+    const history = useHistory();
+    const [data, setdata] = useState([]);
+    const toggleNotif = (type, message) => {
+        notification[type]({
+            message: message,
+            description: "will be disappear in 4 seconds"
+        });
+    };
+    useEffect(() => {
+        Axios.get(api.allzona, {
+            headers: {
+                Authorization: "Bearer " + localStorage.token
+            }
+        })
+            .then(ress => {
+                console.log(ress);
+                setdata(ress.data);
+            })
+            .catch(error => {
+                console.log(error);
+                alert(error);
+            });
+    }, []);
+    const onFinish = record => {
+        console.log(record);
+        let body = {
+            sensor_name: record.nama,
+            zone_id: record.zona
+        };
+        Axios.post(api.createSensor, body, {
+            headers: {
+                Authorization: "Bearer " + localStorage.token
+            }
+        })
+            .then(ress => {
+                toggleNotif("success", "Berhasil menambahkan sensor");
+                history.push("/sensorstatus");
+            })
+            .catch(error => {
+                console.log(error.response);
+                toggleNotif("error", error.response);
+            });
+    };
     return (
         <Layout>
             <Breadcrumb style={{ margin: "16px 0" }}>
@@ -26,12 +82,7 @@ const InputSensor = () => {
                     marginBottom: 64
                 }}
             >
-                <Form
-                    {...layout}
-                    name="basic"
-                    initialValues={{ remember: true }}
-                    form={form}
-                >
+                <Form {...layout} name="basic" form={form} onFinish={onFinish}>
                     <Form.Item
                         label="Nama Sensor"
                         name="nama"
@@ -46,9 +97,14 @@ const InputSensor = () => {
                     </Form.Item>
                     <Form.Item label="Zona" name="zona">
                         <Select style={{ width: 240 }}>
-                            <Option value="1">1</Option>
+                            {data.map(item => (
+                                <Option value={item.id}>
+                                    {item.zone_name}
+                                </Option>
+                            ))}
+                            {/* <Option value="1">1</Option>
                             <Option value="2">2</Option>
-                            <Option value="3">3</Option>
+                            <Option value="3">3</Option> */}
                         </Select>
                     </Form.Item>
                     <Form.Item {...tailLayout}>

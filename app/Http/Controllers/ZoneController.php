@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class ZoneController extends Controller
 {
     public function create(Request $request)
     {
+
+        $payload = Auth::user();
         $validator = Validator::make($request->all(), [
             "zone_name" => 'required|string|max:255',
-            "location" => 'required|string|max:255',
-            "author" => 'required|digits_between:1,20|exists:users,id'
+            "location" => 'required|max:500',
         ]);
 
         if ($validator->fails()) {
@@ -23,13 +25,13 @@ class ZoneController extends Controller
         $zone = Zone::create([
             'zone_name' => $request->get('zone_name'),
             'location' => $request->get('location'),
-            'author' => $request->get('author')
+            'author' => $payload->id
         ]);
         return response()->json($zone, 201);
     }
     public function getAll()
     {
-        return response()->json(Zone::with('author')->get());
+        return response()->json(Zone::with('author', 'sensor')->get());
     }
     public function getById($id)
     {

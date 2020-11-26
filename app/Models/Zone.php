@@ -15,4 +15,8 @@ class Zone extends Model
     {
         return $this->belongsTo('App\User', 'author', 'id');
     }
+    public function sensor()
+    {
+        return $this->hasMany('App\Models\Sensor', 'zone_id', 'id');
+    }
 }

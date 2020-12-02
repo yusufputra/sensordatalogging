@@ -90,11 +90,13 @@ const App = () => {
                                         Status Sensor
                                     </Link>
                                 </Menu.Item>
-                                <Menu.Item key="3">
-                                    <Link to={"/tambahsensor"}>
-                                        Tambah Sensor
-                                    </Link>
-                                </Menu.Item>
+                                {user.role == 2 && (
+                                    <Menu.Item key="3">
+                                        <Link to={"/tambahsensor"}>
+                                            Tambah Sensor
+                                        </Link>
+                                    </Menu.Item>
+                                )}
                             </SubMenu>
                             <SubMenu
                                 key="sub4"
@@ -104,9 +106,13 @@ const App = () => {
                                 <Menu.Item key="7">
                                     <Link to={"/daftarzona"}>Daftar Zona</Link>
                                 </Menu.Item>
-                                <Menu.Item key="8">
-                                    <Link to={"/tambahzona"}>Tambah Zona</Link>
-                                </Menu.Item>
+                                {user.role == 2 && (
+                                    <Menu.Item key="8">
+                                        <Link to={"/tambahzona"}>
+                                            Tambah Zona
+                                        </Link>
+                                    </Menu.Item>
+                                )}
                             </SubMenu>
                             <SubMenu
                                 key="sub3"
@@ -116,11 +122,14 @@ const App = () => {
                                 <Menu.Item key="5">
                                     <Link to={"/user"}>Daftar Pengelola</Link>
                                 </Menu.Item>
-                                <Menu.Item key="6">
-                                    <Link to={"/tambahuser"}>
-                                        Tambah Pengelola
-                                    </Link>
-                                </Menu.Item>
+                                {user.role == 2 && (
+                                    <Menu.Item key="6">
+                                        <Link to={"/tambahuser"}>
+                                            Tambah Pengelola
+                                        </Link>
+                                    </Menu.Item>
+                                )}
+
                                 <Menu.Item key="20">
                                     <Button
                                         style={{ backgroundColor: "#f05d32" }}
@@ -152,33 +161,37 @@ const App = () => {
                                 component={SensorDetail}
                             />
                             <Route
-                                path={"/tambahsensor"}
-                                component={InputSensor}
-                            />
-                            <Route
-                                path={"/tambahuser"}
-                                component={TambahUser}
-                            />
-                            <Route
                                 path={"/daftarzona"}
                                 component={DaftarZona}
                             />
-                            <Route
-                                path={"/tambahzona"}
-                                component={TambahZona}
-                            />
-                            <Route
-                                path={"/editUser/:id"}
-                                component={EditUser}
-                            />
-                            <Route
-                                path={"/editSensor/:id"}
-                                component={EditSensor}
-                            />
-                            <Route
-                                path={"/editZona/:id"}
-                                component={EditZona}
-                            />
+                            {user.role == 2 && (
+                                <div>
+                                    <Route
+                                        path={"/tambahsensor"}
+                                        component={InputSensor}
+                                    />
+                                    <Route
+                                        path={"/tambahuser"}
+                                        component={TambahUser}
+                                    />
+                                    <Route
+                                        path={"/tambahzona"}
+                                        component={TambahZona}
+                                    />
+                                    <Route
+                                        path={"/editUser/:id"}
+                                        component={EditUser}
+                                    />
+                                    <Route
+                                        path={"/editSensor/:id"}
+                                        component={EditSensor}
+                                    />
+                                    <Route
+                                        path={"/editZona/:id"}
+                                        component={EditZona}
+                                    />
+                                </div>
+                            )}
                         </Switch>
                     </Layout>
                 </Layout>

@@ -26,18 +26,22 @@ const DaftarZona = () => {
         {
             title: "Action",
             key: "action",
-            render: (text, record) => (
-                <Space size="middle">
-                    <Link to={"/editZona/" + record.id}>Edit</Link>
-                    <Link
-                        onClick={() => {
-                            deleteZona(record.id);
-                        }}
-                    >
-                        Delete
-                    </Link>
-                </Space>
-            )
+            render: (text, record) => {
+                return (
+                    user.role == 2 && (
+                        <Space size="middle">
+                            <Link to={"/editZona/" + record.id}>Edit</Link>
+                            <Link
+                                onClick={() => {
+                                    deleteZona(record.id);
+                                }}
+                            >
+                                Delete
+                            </Link>
+                        </Space>
+                    )
+                );
+            }
         }
     ];
     const toggleNotif = (type, message) => {

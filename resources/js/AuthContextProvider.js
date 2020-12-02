@@ -4,7 +4,7 @@ import api from "./api/api";
 
 export const UserContext = createContext();
 
-const AuthContextProvider = (props) => {
+const AuthContextProvider = props => {
     const [user, setUser] = useState({});
 
     const [verified, setverified] = useState(false);
@@ -18,8 +18,8 @@ const AuthContextProvider = (props) => {
                 .then(ress => {
                     console.log(ress);
                     if (
-                        ress.data.status != "Token is Invalid" ||
-                        ress.data.status != "Token is Expired" ||
+                        ress.data.status != "Token is Invalid" &&
+                        ress.data.status != "Token is Expired" &&
                         ress.data.status != "Authorization Token not found"
                     ) {
                         setverified(true);

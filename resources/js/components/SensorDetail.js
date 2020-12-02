@@ -84,55 +84,25 @@ const SensorDetail = () => {
     const [data, setdata] = useState([]);
     const [tempdata, setTempData] = useState([]);
     useEffect(() => {
-        Axios.get(api.getsensorbyid + id, {
+        loaddata();
+    }, []);
+    const loaddata = (type = "all") => {
+        Axios.get(api.getsensorbyid + id + "/" + type, {
             headers: {
                 Authorization: "Bearer " + localStorage.token
             }
         })
             .then(ress => {
                 console.log(ress);
-                setdata(ress.data.alldata);
-                setTempData(ress.data.alldata);
+                setdata(ress.data.data);
             })
             .catch(error => {
                 console.log(error);
                 alert(error);
             });
-    }, []);
+    };
     const datafilter = param => {
-        console.log(param);
-        if (param == 1) {
-            console.log("halo");
-            let temh = 0;
-            setdata(
-                tempdata.filter(item => {
-                    console.log(
-                        temh + "=" + item.created_at.split("T")[1].split(":")[0]
-                    );
-                    if (temh != item.created_at.split("T")[1].split(":")[0]) {
-                        temh = item.created_at.split("T")[1].split(":")[0];
-                        return item;
-                    }
-                })
-            );
-        }
-        if (param == 0) {
-            setdata(tempdata);
-        }
-        if (param == 2) {
-            let temh = 0;
-            setdata(
-                tempdata.filter(item => {
-                    console.log(
-                        temh + "=" + item.created_at.split("T")[0].split("-")[2]
-                    );
-                    if (temh != item.created_at.split("T")[0].split("-")[2]) {
-                        temh = item.created_at.split("T")[0].split("-")[2];
-                        return item;
-                    }
-                })
-            );
-        }
+        loaddata(param);
     };
     return (
         <Layout>
@@ -157,11 +127,11 @@ const SensorDetail = () => {
                     style={{ width: 200 }}
                     onChange={datafilter}
                 >
-                    <Option value="0">Setiap 15 minutes</Option>
-                    <Option value="1">Setiap Jam</Option>
-                    <Option value="2">Setiap Hari</Option>
-                    {/* <Option value="3">Setiap Bulan</Option>
-                    <Option value="4">Setiap Tahun</Option> */}
+                    <Option value="all">Setiap 15 minutes</Option>
+                    <Option value="jam">Setiap Jam</Option>
+                    <Option value="hari">Setiap Hari</Option>
+                    <Option value="bulan">Setiap Bulan</Option>
+                    <Option value="tahun">Setiap Tahun</Option>
                 </Select>
                 <Table columns={columns} dataSource={data} />
             </Content>

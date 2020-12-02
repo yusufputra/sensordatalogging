@@ -40,7 +40,7 @@ Route::group(['middleware' => 'jwt.verify'], function () {
     Route::prefix('sensor')->group(function () {
         Route::post('create', [SensorController::class, 'create']);
         Route::get('all', [SensorController::class, 'getAll']);
-        Route::get('id/{id}', [SensorController::class, 'getById']);
+        Route::get('id/{id}/{tipe}', [SensorController::class, 'getById']);
         Route::post('edit', [SensorController::class, 'edit']);
         Route::post('delete', [SensorController::class, 'delete']);
     });

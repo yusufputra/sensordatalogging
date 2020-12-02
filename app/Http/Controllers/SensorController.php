@@ -33,9 +33,79 @@ class SensorController extends Controller
         // return response()->json(Sensor::All());
         return response()->json(Sensor::with('data', 'zone')->get());
     }
-    public function getById($id)
+    public function getById($id, $tipe)
     {
-        return response()->json(Sensor::with('alldata')->where('id', $id)->first());
+        $sensors = Sensor::where('id', $id)->first();
+        $data = Sensor::with('alldata')->where('id', $id)->first();
+        if ($tipe == 'all') {
+            return response()->json(['sensor' => $sensors, 'data' => $data->alldata]);
+        }
+        //normal
+        // return response()->json(['sensor' => $sensors, 'data' => $data->alldata]);
+        //hourly
+        $hourly = [];
+        $temp1 = [];
+        $temp2 = [];
+        $temp3 = [];
+        $temp4 = [];
+        $temp5 = [];
+        $hour = 0;
+        $date = null;
+        $totaldata = count($data->alldata);
+        $iterate = 1;
+        foreach ($data->alldata as $item) {
+            $iterate++;
+            if ($tipe == 'jam') {
+                $ih = explode(":", explode(" ", $item->created_at)[1])[0];
+            } else if ($tipe == 'hari') {
+                $ih = explode("-", explode(" ", $item->created_at)[0])[2];
+            } else if ($tipe == 'bulan') {
+                $ih = explode("-", explode(" ", $item->created_at)[0])[1];
+            } else {
+                $ih = explode("-", explode(" ", $item->created_at)[0])[0];
+            }
+
+            if ($hour != $ih) {
+                if ($temp1 != []) {
+                    //ini buat ngitung
+                    $rata1 = array_sum($temp1) / count($temp1);
+                    $rata2 = array_sum($temp2) / count($temp2);
+                    $rata3 = array_sum($temp3) / count($temp3);
+                    $rata4 = array_sum($temp4) / count($temp4);
+                    $rata5 = array_sum($temp5) / count($temp5);
+                    array_push($hourly, ["id" => $item->id, "sensor_id" => $item->sensor_id, "suhu_udara" => $rata1, "kelembaban_udara" => $rata2, "suhu_tanah" => $rata3, "kelembaban_tanah" => $rata4, "intensitas_cahaya" => $rata5, "created_at" => $date, "updated_at" => $date]);
+                }
+                $hour = $ih;
+                $temp1 = [];
+                $temp2 = [];
+                $temp3 = [];
+                $temp4 = [];
+                $temp5 = [];
+                $date = $item->created_at;
+                array_push($temp1, $item->suhu_udara);
+                array_push($temp2, $item->kelembaban_udara);
+                array_push($temp3, $item->suhu_tanah);
+                array_push($temp4, $item->kelembaban_tanah);
+                array_push($temp5, $item->intensitas_cahaya);
+            } else {
+                array_push($temp1, $item->suhu_udara);
+                array_push($temp2, $item->kelembaban_udara);
+                array_push($temp3, $item->suhu_tanah);
+                array_push($temp4, $item->kelembaban_tanah);
+                array_push($temp5, $item->intensitas_cahaya);
+                if ($iterate == $totaldata) {
+                    //ini buat ngitung
+                    $rata1 = array_sum($temp1) / count($temp1);
+                    $rata2 = array_sum($temp2) / count($temp2);
+                    $rata3 = array_sum($temp3) / count($temp3);
+                    $rata4 = array_sum($temp4) / count($temp4);
+                    $rata5 = array_sum($temp5) / count($temp5);
+                    array_push($hourly, ["id" => $item->id, "sensor_id" => $item->sensor_id, "suhu_udara" => $rata1, "kelembaban_udara" => $rata2, "suhu_tanah" => $rata3, "kelembaban_tanah" => $rata4, "intensitas_cahaya" => $rata5, "created_at" => $date, "updated_at" => $date]);
+                }
+            }
+            // array_push($hourly, $item);
+        }
+        return response()->json(['sensor' => $sensors, 'data' => $hourly]);
     }
     public function edit(Request $request)
     {

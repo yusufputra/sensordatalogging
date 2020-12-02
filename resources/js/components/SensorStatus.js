@@ -29,19 +29,27 @@ const SensorStatus = () => {
         {
             title: "Action",
             key: "action",
-            render: (text, record) => (
-                <Space size="middle">
-                    <Link to={"/detailsensor/" + record.id}>Detail</Link>
-                    <Link to={"/editSensor/" + record.id}>Edit</Link>
-                    <Link
-                        onClick={() => {
-                            deleteSensor(record.id);
-                        }}
-                    >
-                        Delete
-                    </Link>
-                </Space>
-            )
+            render: (text, record) => {
+                return (
+                    <Space size="middle">
+                        <Link to={"/detailsensor/" + record.id}>Detail</Link>
+                        {user.role == 2 && (
+                            <Space size="middle">
+                                <Link to={"/editSensor/" + record.id}>
+                                    Edit
+                                </Link>
+                                <Link
+                                    onClick={() => {
+                                        deleteSensor(record.id);
+                                    }}
+                                >
+                                    Delete
+                                </Link>
+                            </Space>
+                        )}
+                    </Space>
+                );
+            }
         }
     ];
     const toggleNotif = (type, message) => {

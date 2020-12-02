@@ -14,7 +14,7 @@ require("./bootstrap");
 
 require("./components/Example");
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import ReactDOM from "react-dom";
 import AuthContextProvider, { UserContext } from "./authContextProvider";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
@@ -45,8 +45,12 @@ const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
 const App = () => {
     const { user, verified } = useContext(UserContext);
+    const [collapsed, setcollapsed] = useState(
+        screen.width < 600 ? true : false
+    );
     console.log(user);
     console.log(verified);
+    console.log(screen.width);
     if (localStorage.token == null || verified == false) {
         return (
             <div>
@@ -69,7 +73,13 @@ const App = () => {
                     </div>
                 </Header>
                 <Layout style={{ marginTop: 64 }}>
-                    <Sider width={200} className="site-layout-background">
+                    <Sider
+                        width={200}
+                        className="site-layout-background"
+                        collapsible
+                        collapsed={collapsed}
+                        onCollapse={() => setcollapsed(!collapsed)}
+                    >
                         <Menu
                             mode="inline"
                             defaultSelectedKeys={["1"]}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Line } from "@ant-design/charts";
+import { GroupedColumn, Line } from "@ant-design/charts";
 import { Layout, Breadcrumb, Table, Select, Space, Menu } from "antd";
 import { useParams } from "react-router-dom";
 import Axios from "axios";
@@ -50,39 +50,9 @@ const columns = [
     }
 ];
 
-// const dataa = [
-//     {
-//         key: "1",
-//         date: "10-10-2020 19.00",
-//         suhuUdara: 23,
-//         kelembabanUdara: 80,
-//         suhuTanah: 27,
-//         kelembabanTanah: 90,
-//         intensitasCahaya: 100
-//     },
-//     {
-//         key: "2",
-//         date: "10-10-2020 19.00",
-//         suhuUdara: 23,
-//         kelembabanUdara: 80,
-//         suhuTanah: 27,
-//         kelembabanTanah: 90,
-//         intensitasCahaya: 100
-//     },
-//     {
-//         key: "3",
-//         date: "10-10-2020 19.00",
-//         suhuUdara: 23,
-//         kelembabanUdara: 80,
-//         suhuTanah: 27,
-//         kelembabanTanah: 90,
-//         intensitasCahaya: 100
-//     }
-// ];
 const SensorDetail = () => {
     let { id } = useParams();
     const [data, setdata] = useState([]);
-    const [tempdata, setTempData] = useState([]);
     useEffect(() => {
         loaddata();
     }, []);
@@ -94,7 +64,7 @@ const SensorDetail = () => {
         })
             .then(ress => {
                 console.log(ress);
-                setdata(ress.data.data);
+                setdata(ress.data);
             })
             .catch(error => {
                 console.log(error);
@@ -104,13 +74,60 @@ const SensorDetail = () => {
     const datafilter = param => {
         loaddata(param);
     };
+    const config = {
+        title: {
+            visible: true,
+            text: "Rekaman Data oleh Sensor"
+        },
+        description: {
+            visible: true,
+            text: "dalam periode tertentu ditampilkan dalam grafik bar"
+        },
+        forceFit: true,
+        data: data.statistik,
+        xField: "tanggal",
+        yField: "value",
+        yAxis: { min: 0 },
+        label: { visible: true },
+        groupField: "type",
+        Color: ["# ae331b", "# f27957", "#dadada", "# 609db7", "# 1a6179"]
+    };
+    const configg = {
+        title: {
+            visible: true,
+            text: "Rekaman Data oleh Sensor"
+        },
+        description: {
+            visible: true,
+            text: "dalam periode tertentu ditampilkan dalam grafik line"
+        },
+        padding: "auto",
+        forceFit: true,
+        data: data.statistik,
+        xField: "tanggal",
+        yField: "value",
+        yAxis: {
+            label: {
+                formatter: v =>
+                    `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, s => `${s},`)
+            }
+        },
+        legend: { position: "right-top" },
+        seriesField: "type",
+        Color: ["# ae331b", "# f27957", "#dadada", "# 609db7", "# 1a6179"],
+        responsive: true
+    };
     return (
         <Layout>
             <Breadcrumb style={{ margin: "16px 0" }}>
                 <Breadcrumb.Item>Sensor</Breadcrumb.Item>
                 <Breadcrumb.Item>Sensor Status</Breadcrumb.Item>
-                <Breadcrumb.Item>Zona 1</Breadcrumb.Item>
-                <Breadcrumb.Item>Sensor 1</Breadcrumb.Item>
+                <Breadcrumb.Item>
+                    Zone {data.sensor != undefined ? data.sensor.zone_id : "?"}
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                    {data.sensor != undefined ? data.sensor.sensor_name : "?"}
+                </Breadcrumb.Item>
             </Breadcrumb>
             <Content
                 className="site-layout-background"
@@ -133,7 +150,9 @@ const SensorDetail = () => {
                     <Option value="bulan">Setiap Bulan</Option>
                     <Option value="tahun">Setiap Tahun</Option>
                 </Select>
-                <Table columns={columns} dataSource={data} />
+                <GroupedColumn {...config} />
+                <Line {...configg} />
+                <Table columns={columns} dataSource={data.data} />
             </Content>
         </Layout>
     );

@@ -14,7 +14,7 @@ class Sensor extends Model
 
     public function data()
     {
-        return $this->hasMany('App\Models\SensorDataLog', 'sensor_id', 'id')->orderBy('id', 'desc')->take(1);
+        return $this->hasMany('App\Models\SensorDataLog', 'sensor_id', 'id')->orderBy('id', 'desc');
     }
     public function alldata()
     {

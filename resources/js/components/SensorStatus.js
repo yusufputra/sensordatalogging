@@ -14,6 +14,11 @@ const SensorStatus = () => {
     const [data, setdata] = useState([]);
     const columns = [
         {
+            title: "ID sensor",
+            dataIndex: "id",
+            key: "id"
+        },
+        {
             title: "Nama Sensor",
             dataIndex: "sensor_name",
             key: "sensor_name"

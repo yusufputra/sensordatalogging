@@ -35,15 +35,25 @@ class SensorController extends Controller
     }
     public function getById($id, $tipe)
     {
+        $statistik = [];
         $sensors = Sensor::where('id', $id)->first();
         $data = Sensor::with('alldata')->where('id', $id)->first();
         if ($tipe == 'all') {
-            return response()->json(['sensor' => $sensors, 'data' => $data->alldata]);
+
+            foreach ($data->alldata as $item) {
+                array_push($statistik, ["tanggal" => date_format(date_create($item->created_at), "Y-m-d H:i:s"), "type" => "Suhu Udara", "value" => $item->suhu_udara]);
+                array_push($statistik, ["tanggal" => date_format(date_create($item->created_at), "Y-m-d H:i:s"), "type" => "Kelembaban Udara", "value" => $item->kelembaban_udara]);
+                array_push($statistik, ["tanggal" => date_format(date_create($item->created_at), "Y-m-d H:i:s"), "type" => "Suhu Tanah", "value" => $item->suhu_tanah]);
+                array_push($statistik, ["tanggal" => date_format(date_create($item->created_at), "Y-m-d H:i:s"), "type" => "Kelembaban Tanah", "value" => $item->kelembaban_tanah]);
+                array_push($statistik, ["tanggal" => date_format(date_create($item->created_at), "Y-m-d H:i:s"), "type" => "Intensitas Cahaya", "value" => $item->intensitas_cahaya]);
+            }
+            return response()->json(['sensor' => $sensors, 'data' => $data->alldata, 'statistik' => $statistik]);
         }
         //normal
         // return response()->json(['sensor' => $sensors, 'data' => $data->alldata]);
         //hourly
         $hourly = [];
+
         $temp1 = [];
         $temp2 = [];
         $temp3 = [];
@@ -74,6 +84,11 @@ class SensorController extends Controller
                     $rata4 = array_sum($temp4) / count($temp4);
                     $rata5 = array_sum($temp5) / count($temp5);
                     array_push($hourly, ["id" => $item->id, "sensor_id" => $item->sensor_id, "suhu_udara" => $rata1, "kelembaban_udara" => $rata2, "suhu_tanah" => $rata3, "kelembaban_tanah" => $rata4, "intensitas_cahaya" => $rata5, "created_at" => $date, "updated_at" => $date]);
+                    array_push($statistik, ["tanggal" => date_format(date_create($date), "Y-m-d H:i:s"), "type" => "Suhu Udara", "value" => $rata1]);
+                    array_push($statistik, ["tanggal" => date_format(date_create($date), "Y-m-d H:i:s"), "type" => "Kelembaban Udara", "value" => $rata2]);
+                    array_push($statistik, ["tanggal" => date_format(date_create($date), "Y-m-d H:i:s"), "type" => "Suhu Tanah", "value" => $rata3]);
+                    array_push($statistik, ["tanggal" => date_format(date_create($date), "Y-m-d H:i:s"), "type" => "Kelembaban Tanah", "value" => $rata4]);
+                    array_push($statistik, ["tanggal" => date_format(date_create($date), "Y-m-d H:i:s"), "type" => "Intensitas Cahaya", "value" => $rata5]);
                 }
                 $hour = $ih;
                 $temp1 = [];
@@ -101,11 +116,18 @@ class SensorController extends Controller
                     $rata4 = array_sum($temp4) / count($temp4);
                     $rata5 = array_sum($temp5) / count($temp5);
                     array_push($hourly, ["id" => $item->id, "sensor_id" => $item->sensor_id, "suhu_udara" => $rata1, "kelembaban_udara" => $rata2, "suhu_tanah" => $rata3, "kelembaban_tanah" => $rata4, "intensitas_cahaya" => $rata5, "created_at" => $date, "updated_at" => $date]);
+                    array_push($statistik, ["tanggal" => date_format(date_create($date), "Y-m-d H:i:s"), "type" => "Suhu Udara", "value" => $rata1]);
+                    array_push($statistik, ["tanggal" => date_format(date_create($date), "Y-m-d H:i:s"), "type" => "Kelembaban Udara", "value" => $rata2]);
+                    array_push($statistik, ["tanggal" => date_format(date_create($date), "Y-m-d H:i:s"), "type" => "Suhu Tanah", "value" => $rata3]);
+                    array_push($statistik, ["tanggal" => date_format(date_create($date), "Y-m-d H:i:s"), "type" => "Kelembaban Tanah", "value" => $rata4]);
+                    array_push($statistik, ["tanggal" => date_format(date_create($date), "Y-m-d H:i:s"), "type" => "Intensitas Cahaya", "value" => $rata5]);
                 }
             }
             // array_push($hourly, $item);
         }
-        return response()->json(['sensor' => $sensors, 'data' => $hourly]);
+
+
+        return response()->json(['sensor' => $sensors, 'data' => $hourly, 'statistik' => $statistik]);
     }
     public function edit(Request $request)
     {

@@ -14,6 +14,7 @@ const columns = [
         title: "Date",
         dataIndex: "created_at",
         key: "created_at",
+        fixed: "left",
         render: text => (
             <a>{moment(text).format("dddd, MMMM Do YYYY, h:mm:ss a")}</a>
         )
@@ -152,7 +153,11 @@ const SensorDetail = () => {
                 </Select>
                 <GroupedColumn {...config} />
                 <Line {...configg} />
-                <Table columns={columns} dataSource={data.data} />
+                <Table
+                    columns={columns}
+                    dataSource={data.data}
+                    scroll={{ x: true }}
+                />
             </Content>
         </Layout>
     );

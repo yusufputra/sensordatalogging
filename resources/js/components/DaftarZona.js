@@ -15,7 +15,8 @@ const DaftarZona = () => {
         {
             title: "Zone Name",
             dataIndex: "zone_name",
-            key: "zone_name"
+            key: "zone_name",
+            fixed: "left"
         },
         {
             title: "Author",
@@ -102,7 +103,11 @@ const DaftarZona = () => {
                     marginBottom: 64
                 }}
             >
-                <Table columns={columns} dataSource={data} />
+                <Table
+                    columns={columns}
+                    dataSource={data}
+                    scroll={{ x: true }}
+                />
             </Content>
         </Layout>
     );

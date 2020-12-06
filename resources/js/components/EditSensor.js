@@ -27,7 +27,7 @@ const EditSensor = () => {
     const [data, setdata] = useState([]);
     let { id } = useParams();
     useEffect(() => {
-        Axios.get(api.getsensorbyid + id, {
+        Axios.get(api.getsensorid + id, {
             headers: {
                 Authorization: "Bearer " + localStorage.token
             }
@@ -91,7 +91,7 @@ const EditSensor = () => {
         <Layout>
             <Breadcrumb style={{ margin: "16px 0" }}>
                 <Breadcrumb.Item>Sensor</Breadcrumb.Item>
-                <Breadcrumb.Item>Tambah Sensor</Breadcrumb.Item>
+                <Breadcrumb.Item>Edit Sensor</Breadcrumb.Item>
             </Breadcrumb>
             <Content
                 className="site-layout-background"

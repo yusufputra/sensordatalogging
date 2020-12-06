@@ -116,7 +116,7 @@ const App = () => {
                                 <Menu.Item key="7">
                                     <Link to={"/daftarzona"}>Daftar Zona</Link>
                                 </Menu.Item>
-                                {user.role == 2 && (
+                                {user.role == 2 && screen.width > 1052 && (
                                     <Menu.Item key="8">
                                         <Link to={"/tambahzona"}>
                                             Tambah Zona

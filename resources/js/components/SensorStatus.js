@@ -16,12 +16,20 @@ const SensorStatus = () => {
         {
             title: "ID sensor",
             dataIndex: "id",
-            key: "id"
+            key: "id",
+            fixed: "left"
         },
         {
             title: "Nama Sensor",
             dataIndex: "sensor_name",
-            key: "sensor_name"
+            key: "sensor_name",
+            render: (text, record) => {
+                return (
+                    <Link to={"/detailsensor/" + record.id}>
+                        {record.sensor_name}
+                    </Link>
+                );
+            }
         },
         {
             title: "Author",
@@ -144,6 +152,7 @@ const SensorStatus = () => {
                                 <Table
                                     columns={columns}
                                     dataSource={item.sensor}
+                                    scroll={{ x: true }}
                                 />
                             </Panel>
                         );

@@ -16,6 +16,7 @@ const API_CONSTANT_MAP = {
     createSensor: `${BASE_API}/sensor/create`,
     allsensor: `${BASE_API}/sensor/all`,
     getsensorbyid: `${BASE_API}/sensor/id/`,
+    getsensorid: `${BASE_API}/sensor/id/`,
     editsensor: `${BASE_API}/sensor/edit`,
     deletesensor: `${BASE_API}/sensor/delete`
 };

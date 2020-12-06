@@ -33,6 +33,11 @@ class SensorController extends Controller
         // return response()->json(Sensor::All());
         return response()->json(Sensor::with('data', 'zone')->get());
     }
+    public function getSensorId($id)
+    {
+        $sensors = Sensor::where('id', $id)->first();
+        return response()->json($sensors);
+    }
     public function getById($id, $tipe)
     {
         $statistik = [];

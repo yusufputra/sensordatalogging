@@ -11,7 +11,7 @@ const { Content } = Layout;
 const toggleNotif = (type, message) => {
     notification[type]({
         message: message,
-        description: "will be disappear in 4 seconds",
+        description: "will be disappear in 4 seconds"
     });
 };
 const setting = () => {
@@ -21,37 +21,37 @@ const setting = () => {
         console.log(api.alluser);
         Axios.get(api.alluser, {
             headers: {
-                Authorization: "Bearer " + localStorage.token,
-            },
+                Authorization: "Bearer " + localStorage.token
+            }
         })
-            .then((ress) => {
+            .then(ress => {
                 console.log(ress);
                 setdata(ress.data);
             })
-            .catch((error) => {
+            .catch(error => {
                 console.log(error);
                 alert(error);
             });
     }, []);
 
-    const deleteUser = (record) => {
+    const deleteUser = record => {
         let body = {
-            id: record,
+            id: record
         };
         Axios.post(api.deleteUser, body, {
             headers: {
-                Authorization: "Bearer " + localStorage.token,
-            },
+                Authorization: "Bearer " + localStorage.token
+            }
         })
-            .then((ress) => {
+            .then(ress => {
                 toggleNotif("success", "Berhasil menghapus pengelola");
                 setdata(
-                    data.filter((item) => {
+                    data.filter(item => {
                         return item.id != record;
                     })
                 );
             })
-            .catch((error) => {
+            .catch(error => {
                 console.log(error.response);
                 toggleNotif("error", error.response.statusText);
             });
@@ -62,38 +62,35 @@ const setting = () => {
             title: "ID",
             dataIndex: "id",
             key: "id",
+            fixed: "left"
         },
         {
             title: "Name",
             dataIndex: "name",
             key: "name",
-            render: (text) => <a>{text}</a>,
+            render: text => <a>{text}</a>
         },
         {
             title: "Email",
             dataIndex: "email",
-            key: "email",
+            key: "email"
         },
         {
             title: "Created",
             dataIndex: "created_at",
             key: "created_at",
-            render: (text) => (
-                <a>{moment(text).format("MM-DD-YYYY, h:mm:ss")}</a>
-            ),
+            render: text => <a>{moment(text).format("MM-DD-YYYY, h:mm:ss")}</a>
         },
         {
             title: "Last Update",
             dataIndex: "updated_at",
             key: "updated_at",
-            render: (text) => (
-                <a>{moment(text).format("MM-DD-YYYY, h:mm:ss")}</a>
-            ),
+            render: text => <a>{moment(text).format("MM-DD-YYYY, h:mm:ss")}</a>
         },
         {
             title: "Action",
             key: "action",
-            render: (record) => {
+            render: record => {
                 return (
                     user.role == 2 && (
                         <Space size="middle">
@@ -108,8 +105,8 @@ const setting = () => {
                         </Space>
                     )
                 );
-            },
-        },
+            }
+        }
     ];
 
     return (
@@ -123,7 +120,7 @@ const setting = () => {
                 style={{
                     padding: 24,
                     margin: 0,
-                    minHeight: 280,
+                    minHeight: 280
                 }}
             >
                 {user.role == 1 && (
@@ -133,7 +130,11 @@ const setting = () => {
                         </Button>
                     </Link>
                 )}
-                <Table columns={columns} dataSource={data} />
+                <Table
+                    columns={columns}
+                    dataSource={data}
+                    scroll={{ x: true }}
+                />
             </Content>
         </div>
     );

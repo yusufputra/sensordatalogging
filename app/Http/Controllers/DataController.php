@@ -20,7 +20,7 @@ class DataController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json($validator->errors(), 400);
         }
 
         $data = SensorDataLog::create([
@@ -35,7 +35,7 @@ class DataController extends Controller
     }
     public function getAll()
     {
-        return response()->json(SensorDataLog::orderBy('id','desc')->get());
+        return response()->json(SensorDataLog::orderBy('id', 'desc')->get());
     }
     public function getById($id)
     {

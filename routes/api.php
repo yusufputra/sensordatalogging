@@ -28,6 +28,7 @@ Route::get('alluser', [UserController::class, 'getAllUser'])->middleware('jwt.ve
 Route::post('deleteuser', [UserController::class, 'deleteUser'])->middleware('jwt.verify');
 Route::get('user/{id}', [UserController::class, 'getSpecifiedById'])->middleware('jwt.verify');
 Route::post('edituser', [UserController::class, 'editUser'])->middleware('jwt.verify');
+Route::post('rekamdata', [DataController::class, 'create']);
 
 Route::group(['middleware' => 'jwt.verify'], function () {
     Route::prefix('zone')->group(function () {

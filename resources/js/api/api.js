@@ -1,4 +1,4 @@
-const BASE_API = `/api`;
+const BASE_API = `/sensordatalogging/public/api`;
 
 const API_CONSTANT_MAP = {
     login: `${BASE_API}/login`,
@@ -18,7 +18,7 @@ const API_CONSTANT_MAP = {
     getsensorbyid: `${BASE_API}/sensor/id/`,
     getsensorid: `${BASE_API}/sensor/id/`,
     editsensor: `${BASE_API}/sensor/edit`,
-    deletesensor: `${BASE_API}/sensor/delete`
+    deletesensor: `${BASE_API}/sensor/delete`,
 };
 
 module.exports = API_CONSTANT_MAP;

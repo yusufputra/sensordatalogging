@@ -21,6 +21,7 @@ class CreateSensorDataLogsTable extends Migration
             $table->integer('suhu_tanah');
             $table->integer('kelembaban_tanah');
             $table->integer('intensitas_cahaya');
+            $table->integer('batrai')->default(0);
             $table->timestamps();
 
             $table->foreign('sensor_id')->references('id')->on('sensors');

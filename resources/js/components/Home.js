@@ -73,6 +73,10 @@ const Home = () => {
                                             Intensitas Cahaya :{" "}
                                             {item.data[0].intensitas_cahaya} Cd
                                         </p>
+                                        <p>
+                                            Kapasitas Batrai :{" "}
+                                            {item.data[0].batrai}
+                                        </p>
                                     </div>
                                 )}
                                 {item.data.length === 0 && (

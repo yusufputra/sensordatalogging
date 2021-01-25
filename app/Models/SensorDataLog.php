@@ -9,10 +9,11 @@ class SensorDataLog extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'sensor_id', 'suhu_udara', 'kelembaban_udara', 'suhu_tanah', 'kelembaban_tanah', 'intensitas_cahaya'
+        'sensor_id', 'suhu_udara', 'kelembaban_udara', 'suhu_tanah', 'kelembaban_tanah', 'intensitas_cahaya', 'batrai'
     ];
 
-    public function sensor(){
+    public function sensor()
+    {
         return $this->belongsTo('sensors');
     }
 }

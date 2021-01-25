@@ -16,7 +16,8 @@ class DataController extends Controller
             "kelembaban_udara" => 'required|integer',
             "suhu_tanah" => 'required|integer',
             "kelembaban_tanah" => 'required|integer',
-            "intensitas_cahaya" => 'required|integer'
+            "intensitas_cahaya" => 'required|integer',
+            "batrai" => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -29,7 +30,8 @@ class DataController extends Controller
             "kelembaban_udara" => $request->get('kelembaban_udara'),
             "suhu_tanah" => $request->get('suhu_tanah'),
             "kelembaban_tanah" => $request->get('kelembaban_tanah'),
-            "intensitas_cahaya" => $request->get('intensitas_cahaya')
+            "intensitas_cahaya" => $request->get('intensitas_cahaya'),
+            "batrai" => $request->get('batrai')
         ]);
         return response()->json($data, 201);
     }

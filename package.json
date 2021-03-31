@@ -26,9 +26,14 @@
     },
     "dependencies": {
         "@ant-design/charts": "^0.9.6",
+        "@babel/plugin-proposal-class-properties": "^7.10.1",
+        "@babel/plugin-syntax-class-properties": "^7.10.1",
         "ant-design-pro": "^2.3.2",
         "antd": "^4.7.2",
+        "file-saver": "^2.0.5",
         "moment": "^2.29.1",
+        "prop-types": "^15.7.2",
+        "react-csv-reader": "^3.3.0",
         "react-router-dom": "^5.2.0"
     }
 }

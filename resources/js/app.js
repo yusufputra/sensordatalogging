@@ -40,6 +40,8 @@ import Login from "./components/Login";
 import EditUser from "./components/EditUser";
 import EditSensor from "./components/EditSensor";
 import EditZona from "./components/EditZona";
+import UploadData from "./components/UploadData";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
@@ -104,6 +106,13 @@ const App = () => {
                                     <Menu.Item key="3">
                                         <Link to={"/tambahsensor"}>
                                             Tambah Sensor
+                                        </Link>
+                                    </Menu.Item>
+                                )}
+                                {user.role == 2 && (
+                                    <Menu.Item key="8">
+                                        <Link to={"/uploaddatalama"}>
+                                            Upload Data Lama
                                         </Link>
                                     </Menu.Item>
                                 )}
@@ -200,6 +209,10 @@ const App = () => {
                                         path={"/editZona/:id"}
                                         component={EditZona}
                                     />
+                                    <Route
+                                        path={"/uploaddatalama"}
+                                        component={UploadData}
+                                    />
                                 </div>
                             )}
                         </Switch>
@@ -220,3 +233,4 @@ ReactDOM.render(
     </BrowserRouter>,
     document.getElementById("app")
 );
+serviceWorkerRegistration.register();

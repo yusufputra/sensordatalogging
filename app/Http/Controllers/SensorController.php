@@ -40,6 +40,7 @@ class SensorController extends Controller
     }
     public function getById($id, $tipe)
     {
+
         $statistik = [];
         $sensors = Sensor::where('id', $id)->first();
         $data = Sensor::with('alldata')->where('id', $id)->first();
@@ -47,35 +48,41 @@ class SensorController extends Controller
 
             foreach ($data->alldata as $item) {
                 array_push($statistik, [
+                    "id" => $item->id,
                     "tanggal" => date_format(date_create($item->created_at), "Y-m-d H:i:s"),
                     "type" => "Suhu Udara",
                     "value" => $item->suhu_udara
                 ]);
                 array_push($statistik, [
+                    "id" => $item->id,
                     "tanggal" => date_format(date_create($item->created_at), "Y-m-d H:i:s"),
                     "type" => "Kelembaban Udara",
                     "value" => $item->kelembaban_udara
                 ]);
                 array_push($statistik, [
+                    "id" => $item->id,
                     "tanggal" => date_format(date_create($item->created_at), "Y-m-d H:i:s"),
                     "type" => "Suhu Tanah",
                     "value" => $item->suhu_tanah
                 ]);
                 array_push($statistik, [
+                    "id" => $item->id,
                     "tanggal" => date_format(date_create($item->created_at), "Y-m-d H:i:s"),
                     "type" => "Kelembaban Tanah",
                     "value" => $item->kelembaban_tanah
                 ]);
                 array_push($statistik, [
+                    "id" => $item->id,
                     "tanggal" => date_format(date_create($item->created_at), "Y-m-d H:i:s"),
                     "type" => "Intensitas Cahaya",
                     "value" => $item->intensitas_cahaya
                 ]);
             }
+
             return response()->json([
                 'sensor' => $sensors,
                 'data' => $data->alldata,
-                'statistik' => $statistik
+                'statistik' => $statistik,
             ]);
         }
         $hourly = [];
@@ -120,26 +127,31 @@ class SensorController extends Controller
                         "updated_at" => $date
                     ]);
                     array_push($statistik, [
+                        "id" => $item->id,
                         "tanggal" => date_format(date_create($date), "Y-m-d H:i:s"),
                         "type" => "Suhu Udara",
                         "value" => $rata1
                     ]);
                     array_push($statistik, [
+                        "id" => $item->id,
                         "tanggal" => date_format(date_create($date), "Y-m-d H:i:s"),
                         "type" => "Kelembaban Udara",
                         "value" => $rata2
                     ]);
                     array_push($statistik, [
+                        "id" => $item->id,
                         "tanggal" => date_format(date_create($date), "Y-m-d H:i:s"),
                         "type" => "Suhu Tanah",
                         "value" => $rata3
                     ]);
                     array_push($statistik, [
+                        "id" => $item->id,
                         "tanggal" => date_format(date_create($date), "Y-m-d H:i:s"),
                         "type" => "Kelembaban Tanah",
                         "value" => $rata4
                     ]);
                     array_push($statistik, [
+                        "id" => $item->id,
                         "tanggal" => date_format(date_create($date), "Y-m-d H:i:s"),
                         "type" => "Intensitas Cahaya",
                         "value" => $rata5
@@ -210,11 +222,10 @@ class SensorController extends Controller
             }
         }
 
-
         return response()->json([
             'sensor' => $sensors,
             'data' => $hourly,
-            'statistik' => $statistik
+            'statistik' => $statistik,
         ]);
     }
     public function edit(Request $request)

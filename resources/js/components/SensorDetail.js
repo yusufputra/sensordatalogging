@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { GroupedColumn, Line } from "@ant-design/charts";
+import { GroupedColumn, Line, Scatter } from "@ant-design/charts";
 import { Layout, Breadcrumb, Table, Select, Space, Menu } from "antd";
 import { useParams } from "react-router-dom";
 import Axios from "axios";
@@ -61,6 +61,7 @@ const columns = [
 const SensorDetail = () => {
     let { id } = useParams();
     const [data, setdata] = useState([]);
+    const [tempData, setTempData] = useState([]);
     useEffect(() => {
         loaddata();
     }, []);
@@ -71,8 +72,8 @@ const SensorDetail = () => {
             }
         })
             .then(ress => {
-                console.log(ress);
                 setdata(ress.data);
+                setTempData(ress.data.statistik);
             })
             .catch(error => {
                 console.log(error);
@@ -122,8 +123,28 @@ const SensorDetail = () => {
         },
         legend: { position: "right-top" },
         seriesField: "type",
-        Color: ["# ae331b", "# f27957", "#dadada", "# 609db7", "# 1a6179"],
+        Color: ["#ae331b", "#f27957", "#dadada", "#609db7", "#1a6179"],
         responsive: true
+    };
+    const configgg = {
+        appendPadding: 30,
+        data: tempData,
+        xField: "id",
+        yField: "value",
+        colorField: "type",
+        color: ["#ae331b", "#f27957", "#dadada", "#609db7", "#1a6179"],
+        size: 5,
+        shape: "circle",
+        pointStyle: { fillOpacity: 1 },
+        yAxis: {
+            nice: true,
+            line: { style: { stroke: "#aaa" } }
+        },
+        xAxis: {
+            grid: { line: { style: { stroke: "#eee" } } },
+            line: { style: { stroke: "#aaa" } }
+        },
+        label: {}
     };
     const filename = "export " + Date.now(),
         fields = {
@@ -204,6 +225,7 @@ const SensorDetail = () => {
                     />
                 )}
                 <GroupedColumn {...config} />
+                <Scatter {...configgg} />
                 <Line {...configg} />
                 <Table
                     columns={columns}

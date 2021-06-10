@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Layout, Row, Col, Card, Breadcrumb } from "antd";
+import { Layout, Row, Col, Card, Breadcrumb, Tag } from "antd";
 import Axios from "axios";
 import api from "../api/api";
 import { Link } from "react-router-dom";
@@ -48,7 +48,33 @@ const Home = () => {
                                 title={item.sensor_name}
                                 style={{ width: 300 }}
                                 extra={
-                                    <Link to="#">{item.zone.zone_name}</Link>
+                                    item.data.length !== 0 && (
+                                        <div>
+                                            <Link to="#">
+                                                {item.zone.zone_name}
+                                            </Link>
+                                            <Tag
+                                                color={
+                                                    item.data[0].batrai > 20
+                                                        ? "green"
+                                                        : item.data[0].batrai <=
+                                                              20 &&
+                                                          item.data[0].batrai >
+                                                              0
+                                                        ? "orange"
+                                                        : "red"
+                                                }
+                                            >
+                                                {item.data[0].batrai > 20
+                                                    ? "Aktif"
+                                                    : item.data[0].batrai <=
+                                                          20 &&
+                                                      item.data[0].batrai > 0
+                                                    ? "Batrai Lemah"
+                                                    : "Mati"}
+                                            </Tag>
+                                        </div>
+                                    )
                                 }
                             >
                                 {item.data.length !== 0 && (

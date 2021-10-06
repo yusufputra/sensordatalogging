@@ -18,7 +18,7 @@ class adminUser extends Seeder
         DB::table('users')->insert([
             'name' => 'Trial User',
             'email' => 'trial@iklimuforest.com',
-            'role' => 1,
+            'role' => 2,
             'email_verified_at' => now(),
             'password' => Hash::make('test123'),
             'created_at' => now(),

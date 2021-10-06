@@ -17,6 +17,7 @@ class OldData extends Migration
         Schema::create('old_data', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('author');
+            $table->string('label');
             $table->integer('month');
             $table->integer('year');
             $table->json('data');
@@ -33,6 +34,6 @@ class OldData extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('old_data');
     }
 }

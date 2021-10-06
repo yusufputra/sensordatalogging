@@ -175,6 +175,7 @@ const SensorDetail = () => {
                 className="site-layout-background"
                 style={{
                     padding: 24,
+                    paddingBottom: 100,
                     margin: 0,
                     minHeight: "min-content",
                     marginBottom: 64

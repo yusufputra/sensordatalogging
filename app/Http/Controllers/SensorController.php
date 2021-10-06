@@ -43,7 +43,7 @@ class SensorController extends Controller
 
         $statistik = [];
         $sensors = Sensor::where('id', $id)->first();
-        $data = Sensor::with('alldata')->where('id', $id)->first();
+        $data = Sensor::with('alldata')->where(['id' => $id])->first();
         if ($tipe == 'all') {
 
             foreach ($data->alldata as $item) {

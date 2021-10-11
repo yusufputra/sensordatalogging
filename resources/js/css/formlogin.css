@@ -12,3 +12,48 @@
     color: aliceblue;
     background-color: aquamarine;
 }
+.centered {
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    font-size: 600%;
+}
+.subcentered {
+    color: white;
+    position: absolute;
+    top: 54%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    font-size: 150%;
+}
+
+.carousel {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.center-card {
+    justify-items: center;
+    display: grid;
+}
+
+@media only screen and (max-width: 1366px) {
+    .centered {
+        color: white;
+        position: absolute;
+        top: 50%;
+        left: 75%;
+        transform: translate(-50%, -50%);
+        font-size: 400%;
+    }
+    .subcentered {
+        color: white;
+        position: absolute;
+        top: 55%;
+        left: 75%;
+        transform: translate(-50%, -50%);
+        font-size: 150%;
+    }
+}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sensor;
+use App\Models\SensorDataLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -45,8 +46,9 @@ class SensorController extends Controller
         $sensors = Sensor::where('id', $id)->first();
         $data = Sensor::with('alldata')->where(['id' => $id])->first();
         if ($tipe == 'all') {
-
+            $i = 0;
             foreach ($data->alldata as $item) {
+                $i++;
                 array_push($statistik, [
                     "id" => $item->id,
                     "tanggal" => date_format(date_create($item->created_at), "Y-m-d H:i:s"),
@@ -77,6 +79,9 @@ class SensorController extends Controller
                     "type" => "Intensitas Cahaya",
                     "value" => $item->intensitas_cahaya
                 ]);
+                if ($i == 100) {
+                    break;
+                }
             }
 
             return response()->json([
@@ -253,6 +258,8 @@ class SensorController extends Controller
     {
         $sensor = Sensor::where('id', $request->id)->first();
         if ($sensor) {
+            $datas = SensorDataLog::where('sensor_id', $sensor->id);
+            $datas->delete();
             $sensor->delete();
 
             return response()->json([

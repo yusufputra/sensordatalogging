@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sensor;
+use App\Models\SensorDataLog;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -61,6 +63,17 @@ class ZoneController extends Controller
     public function delete(Request $request)
     {
         $zona = Zone::where('id', $request->id)->first();
+        $sensors = Sensor::where('zone_id', $request->id);
+        $sensordatas = Sensor::where('zone_id', $request->id)->get();
+        if ($sensordatas) {
+            foreach ($sensordatas as $item) {
+                $datas = SensorDataLog::where('sensor_id', $item['id']);
+                $datas->delete();
+                // return response()->json($datas);
+            }
+            $sensors->delete();
+        }
+        // return response()->json($sensors);
         if ($zona) {
             $zona->delete();
 

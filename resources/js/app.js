@@ -60,6 +60,7 @@ const App = () => {
             </div>
         );
     } else {
+        document.getElementsByTagName("body")[0].style.overflow = "hidden";
         const logout = () => {
             localStorage.clear();
             window.location.reload();
@@ -151,7 +152,9 @@ const App = () => {
 
                                 <Menu.Item key="20">
                                     <Button
-                                        style={{ backgroundColor: "#f05d32" }}
+                                        style={{
+                                            backgroundColor: "#f05d32"
+                                        }}
                                         onClick={logout}
                                         type="primary"
                                         danger
@@ -233,4 +236,5 @@ ReactDOM.render(
     </BrowserRouter>,
     document.getElementById("app")
 );
+
 serviceWorkerRegistration.register();

@@ -39,7 +39,7 @@
     display: grid;
 }
 
-@media only screen and (max-width: 1366px) {
+@media only screen and (max-width: 1440px) {
     .centered {
         color: white;
         position: absolute;

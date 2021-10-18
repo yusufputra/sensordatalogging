@@ -143,8 +143,7 @@ const SensorDetail = () => {
         xAxis: {
             grid: { line: { style: { stroke: "#eee" } } },
             line: { style: { stroke: "#aaa" } }
-        },
-        label: {}
+        }
     };
     const filename = "export " + Date.now(),
         fields = {
